@@ -1,0 +1,170 @@
+@import "tailwindcss";
+
+/* ── Hand of Yah Brand Tokens (Tailwind v4 @theme) ── */
+@theme {
+  /* Colors — Primary */
+  --color-parchment: #F5F0E8;
+  --color-umber: #2C2420;
+  --color-terracotta: #C4704B;
+
+  /* Colors — Secondary */
+  --color-sage: #8B9A7E;
+  --color-stone: #E8E2D8;
+  --color-taupe: #B8AFA6;
+  --color-espresso: #1A1614;
+
+  /* Colors — Extended */
+  --color-amber: #D4A574;
+  --color-linen: #FAF7F2;
+  --color-clay: #A85E3A;
+
+  /* Typography — Font Families (mapped from next/font/google CSS variables) */
+  --font-display: var(--font-cormorant), 'Georgia', serif;
+  --font-body: var(--font-outfit), 'Helvetica Neue', sans-serif;
+
+  /* Typography — Font Sizes with line-height and letter-spacing */
+  --font-size-display-xl: 4.5rem;
+  --font-size-display-xl--line-height: 1.0;
+  --font-size-display-xl--letter-spacing: -0.02em;
+
+  --font-size-display-lg: 3rem;
+  --font-size-display-lg--line-height: 1.1;
+  --font-size-display-lg--letter-spacing: -0.01em;
+
+  --font-size-display-md: 2.25rem;
+  --font-size-display-md--line-height: 1.15;
+
+  --font-size-display-sm: 1.5rem;
+  --font-size-display-sm--line-height: 1.2;
+
+  --font-size-body-lg: 1.125rem;
+  --font-size-body-lg--line-height: 1.7;
+
+  --font-size-body: 1rem;
+  --font-size-body--line-height: 1.7;
+
+  --font-size-body-sm: 0.875rem;
+  --font-size-body-sm--line-height: 1.6;
+
+  --font-size-label: 0.75rem;
+  --font-size-label--line-height: 1.4;
+  --font-size-label--letter-spacing: 0.08em;
+
+  --font-size-nav: 0.875rem;
+  --font-size-nav--line-height: 1;
+  --font-size-nav--letter-spacing: 0.06em;
+
+  --font-size-price: 1.25rem;
+  --font-size-price--line-height: 1;
+  --font-size-price--letter-spacing: 0.02em;
+
+  --font-size-button: 0.875rem;
+  --font-size-button--line-height: 1;
+  --font-size-button--letter-spacing: 0.04em;
+
+  /* Layout — Max Widths */
+  --width-content: 1280px;
+  --width-prose: 65ch;
+
+  /* Transitions */
+  --ease-entrance: cubic-bezier(0, 0, 0.2, 1);
+
+  /* Shadows */
+  --shadow-card: 0 4px 12px rgba(44, 36, 32, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(44, 36, 32, 0.1);
+  --shadow-header: 0 1px 0 rgba(44, 36, 32, 0.06);
+
+  /* Spacing extras (8px grid) */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-26: 6.5rem;
+  --spacing-30: 7.5rem;
+}
+
+/* ── Base Styles ── */
+:root {
+  /* Semantic aliases */
+  --color-background: var(--color-linen);
+  --color-foreground: var(--color-umber);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+}
+
+/* ── Component Classes ── */
+@layer components {
+  /*
+   * Custom @theme font-size tokens (text-button, text-label, etc.) cannot be
+   * resolved inside @apply in Tailwind v4 at CSS-processing time. We use
+   * direct CSS properties for those values and @apply only for utilities that
+   * Tailwind's core generates (colors, spacing, transitions, layout).
+   */
+  .btn-primary {
+    @apply bg-terracotta text-parchment font-body font-medium
+           uppercase px-8 py-4 inline-block
+           transition-colors duration-300 ease-out
+           hover:bg-clay active:bg-clay cursor-pointer;
+    font-size: var(--font-size-button);
+    line-height: var(--font-size-button--line-height);
+    letter-spacing: var(--font-size-button--letter-spacing);
+  }
+
+  .btn-secondary {
+    @apply bg-transparent text-umber border border-umber font-body
+           font-medium uppercase px-8 py-4 inline-block
+           transition-colors duration-300 ease-out
+           hover:bg-stone active:bg-stone cursor-pointer;
+    font-size: var(--font-size-button);
+    line-height: var(--font-size-button--line-height);
+    letter-spacing: var(--font-size-button--letter-spacing);
+  }
+
+  .btn-text {
+    @apply text-umber font-body font-medium relative inline-block;
+    font-size: var(--font-size-button);
+    line-height: var(--font-size-button--line-height);
+    letter-spacing: var(--font-size-button--letter-spacing);
+  }
+
+  .section-padding {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .container-content {
+    @apply mx-auto px-5 md:px-10;
+    max-width: var(--width-content);
+  }
+
+  .label-text {
+    @apply font-body font-semibold uppercase text-taupe;
+    font-size: var(--font-size-label);
+    line-height: var(--font-size-label--line-height);
+    letter-spacing: var(--font-size-label--letter-spacing);
+  }
+}
+
+/* ── Scroll Reveal Animations ── */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s cubic-bezier(0, 0, 0.2, 1),
+    transform 0.6s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect reduced motion preference — skip the animation entirely */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

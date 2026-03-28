@@ -1,0 +1,672 @@
+{
+  "feature": "handofya-redesign",
+  "approach": "monolithic-nextjs",
+  "created": "2026-03-27",
+  "totalTasks": 42,
+  "groups": [
+    {
+      "id": "G1",
+      "name": "Project Scaffolding",
+      "description": "Next.js project setup, dependency installation, client singletons, environment configuration",
+      "tasks": [
+        {
+          "id": "T1",
+          "title": "Initialize Next.js 15 project with App Router and TypeScript",
+          "description": "Create the Next.js project at projects/handofya/web/ with TypeScript strict mode, Tailwind CSS, PostCSS, ESLint, Prettier. Install core dependencies: next, react, react-dom, tailwindcss, postcss, autoprefixer, typescript, @types/react, @types/node, eslint, prettier. Create tsconfig.json with strict: true, next.config.ts, postcss.config.js, .gitignore (include node_modules, .next, .env.local), .env.local.example with all required env vars listed.",
+          "files": [
+            "projects/handofya/web/package.json",
+            "projects/handofya/web/next.config.ts",
+            "projects/handofya/web/tsconfig.json",
+            "projects/handofya/web/postcss.config.js",
+            "projects/handofya/web/.gitignore",
+            "projects/handofya/web/.env.local.example"
+          ],
+          "dependencies": [],
+          "verification": "cd projects/handofya/web && npm run build && npx tsc --noEmit",
+          "group": "G1"
+        },
+        {
+          "id": "T2",
+          "title": "Configure Tailwind with placeholder brand tokens",
+          "description": "Create tailwind.config.ts with extend block for colors (placeholder earthy palette: cream, taupe, warm-gray, accent), fontFamily (placeholder serif + sans-serif), borderRadius, and spacing. These will be updated when brand guidelines are finalized. Content paths should include ./src/**/*.{ts,tsx,mdx}.",
+          "files": [
+            "projects/handofya/web/tailwind.config.ts"
+          ],
+          "dependencies": ["T1"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G1"
+        },
+        {
+          "id": "T3",
+          "title": "Set up Supabase client singleton",
+          "description": "Create lib/supabase.ts with getSupabaseClient() pattern copied from SecureClear. Create lib/supabase-server.ts with createServerClient() for use in API routes (uses SUPABASE_SERVICE_ROLE_KEY for admin operations). Install @supabase/supabase-js and @supabase/ssr.",
+          "files": [
+            "projects/handofya/web/src/lib/supabase.ts",
+            "projects/handofya/web/src/lib/supabase-server.ts"
+          ],
+          "dependencies": ["T1"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G1"
+        },
+        {
+          "id": "T4",
+          "title": "Set up Sanity client and configuration",
+          "description": "Install next-sanity, @sanity/image-url, @portabletext/react, sanity. Create sanity/config.ts with project ID, dataset, API version. Create lib/sanity.ts with sanityClient and sanityFetch<T>(query, params) helper. Create lib/sanity-image.ts with urlForImage() helper using @sanity/image-url. Configure next.config.ts to allow Sanity CDN image domains.",
+          "files": [
+            "projects/handofya/web/src/sanity/config.ts",
+            "projects/handofya/web/src/lib/sanity.ts",
+            "projects/handofya/web/src/lib/sanity-image.ts"
+          ],
+          "dependencies": ["T1"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G1"
+        },
+        {
+          "id": "T5",
+          "title": "Set up Stripe server and client initialization",
+          "description": "Install stripe (Node SDK), @stripe/stripe-js, @stripe/react-stripe-js. Create lib/stripe.ts with getStripeServer() singleton (server-side only, uses STRIPE_SECRET_KEY). Create lib/stripe-client.ts with getStripePromise() for client-side Stripe Elements initialization (uses NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY).",
+          "files": [
+            "projects/handofya/web/src/lib/stripe.ts",
+            "projects/handofya/web/src/lib/stripe-client.ts"
+          ],
+          "dependencies": ["T1"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G1"
+        },
+        {
+          "id": "T6",
+          "title": "Create Listmonk API client",
+          "description": "Create lib/listmonk.ts with sendTransactionalEmail(templateId, email, data) and addSubscriber(email, listId) functions. Uses fetch with Basic Auth (LISTMONK_API_USER:LISTMONK_API_TOKEN). Base URL from LISTMONK_URL env var.",
+          "files": [
+            "projects/handofya/web/src/lib/listmonk.ts"
+          ],
+          "dependencies": ["T1"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G1"
+        },
+        {
+          "id": "T7",
+          "title": "Create shared TypeScript types and constants",
+          "description": "Create lib/types.ts with interfaces: Product, Category, JournalPost, LearnArticle, Ingredient, Page, CartItem, Order, Subscription, WishlistItem, Customer, Address, CheckoutRequest, CheckoutResponse. Create lib/constants.ts with SITE_URL, CATEGORIES, SUBSCRIPTION_FREQUENCIES, SHIPPING_METHODS.",
+          "files": [
+            "projects/handofya/web/src/lib/types.ts",
+            "projects/handofya/web/src/lib/constants.ts"
+          ],
+          "dependencies": ["T1"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G1"
+        }
+      ]
+    },
+    {
+      "id": "G2",
+      "name": "Design System",
+      "description": "Brand tokens, global styles, reusable UI components, and page layouts",
+      "tasks": [
+        {
+          "id": "T8",
+          "title": "Create global styles with Tailwind layers and component classes",
+          "description": "Create globals.css with Tailwind directives (@tailwind base, components, utilities). Under @layer base, set default body styles, smooth scrolling, font antialiasing. Under @layer components, define: .btn-primary, .btn-secondary, .btn-ghost, .section-container (max-width + padding), .input-field, .product-card, .heading-xl through .heading-sm, .body-lg, .body-sm, .caption. Follow the SecureClear pattern of component classes in globals.css.",
+          "files": [
+            "projects/handofya/web/src/app/globals.css"
+          ],
+          "dependencies": ["T2"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G2"
+        },
+        {
+          "id": "T9",
+          "title": "Build core UI components (Button, Input, NewsletterForm)",
+          "description": "Create components/ui/Button.tsx with variants (primary, secondary, ghost), sizes (sm, md, lg), disabled state, loading state. Create components/ui/Input.tsx with label, error message, and required indicator. Create components/ui/NewsletterForm.tsx with email input and submit button that calls POST /api/newsletter. Create components/ui/SocialShare.tsx with copy-link, Instagram, Facebook, Twitter share buttons.",
+          "files": [
+            "projects/handofya/web/src/components/ui/Button.tsx",
+            "projects/handofya/web/src/components/ui/Input.tsx",
+            "projects/handofya/web/src/components/ui/NewsletterForm.tsx",
+            "projects/handofya/web/src/components/ui/SocialShare.tsx"
+          ],
+          "dependencies": ["T8"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G2"
+        },
+        {
+          "id": "T10",
+          "title": "Build content rendering components",
+          "description": "Create components/content/PortableText.tsx that wraps @portabletext/react with custom serializers for Sanity Portable Text blocks (headings, images, links, lists). This component is used by product descriptions, journal posts, learn articles, and CMS pages.",
+          "files": [
+            "projects/handofya/web/src/components/content/PortableText.tsx"
+          ],
+          "dependencies": ["T4", "T8"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G2"
+        }
+      ]
+    },
+    {
+      "id": "G3",
+      "name": "Sanity CMS Schemas and Studio",
+      "description": "Content models for all document types and embedded Sanity Studio",
+      "tasks": [
+        {
+          "id": "T11",
+          "title": "Create Sanity document schemas (Product, Category, Ingredient)",
+          "description": "Create sanity/schemas/product.ts with fields matching the shape.md Product model: name, slug, price, description (Portable Text), ingredients (references), usageInstructions (Portable Text), category (reference), images (array of image), subscriptionEligible (boolean), status (string: active/draft), seo (object: metaTitle, metaDescription). Create sanity/schemas/category.ts with name, slug, description, order. Create sanity/schemas/ingredient.ts with name, slug, description (Portable Text), benefits (array of string).",
+          "files": [
+            "projects/handofya/web/src/sanity/schemas/product.ts",
+            "projects/handofya/web/src/sanity/schemas/category.ts",
+            "projects/handofya/web/src/sanity/schemas/ingredient.ts"
+          ],
+          "dependencies": ["T4"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G3"
+        },
+        {
+          "id": "T12",
+          "title": "Create Sanity document schemas (Journal, Learn, Page)",
+          "description": "Create sanity/schemas/journalPost.ts with title, slug, featuredImage, body (Portable Text), excerpt, category (reference), publishedAt, seo. Create sanity/schemas/journalCategory.ts with name, slug. Create sanity/schemas/learnArticle.ts with title, slug, featuredImage, body, relatedProducts (references), seo. Create sanity/schemas/page.ts with title, slug, body, seo. Create sanity/schemas/index.ts that exports all schemas.",
+          "files": [
+            "projects/handofya/web/src/sanity/schemas/journalPost.ts",
+            "projects/handofya/web/src/sanity/schemas/journalCategory.ts",
+            "projects/handofya/web/src/sanity/schemas/learnArticle.ts",
+            "projects/handofya/web/src/sanity/schemas/page.ts",
+            "projects/handofya/web/src/sanity/schemas/index.ts"
+          ],
+          "dependencies": ["T4"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G3"
+        },
+        {
+          "id": "T13",
+          "title": "Create GROQ query library",
+          "description": "Create sanity/lib/queries.ts with typed GROQ query strings for all fetch operations: allProducts, productsByCategory, productBySlug, allCategories, allJournalPosts (paginated), journalPostBySlug, allLearnArticles, learnArticleBySlug, allIngredients, ingredientBySlug, pageBySlug, featuredProducts, relatedProducts. Each query should select only the fields needed by its corresponding page component.",
+          "files": [
+            "projects/handofya/web/src/sanity/lib/queries.ts"
+          ],
+          "dependencies": ["T11", "T12"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G3"
+        },
+        {
+          "id": "T14",
+          "title": "Embed Sanity Studio at /studio route",
+          "description": "Create app/studio/[[...tool]]/page.tsx using next-sanity's Studio component. Configure sanity.config.ts (or sanity/config.ts) with the project schemas and plugins (deskTool, visionTool). The Studio should be accessible at handofya.com/studio and use Sanity's built-in authentication. Update next.config.ts if needed to handle Studio routing.",
+          "files": [
+            "projects/handofya/web/src/app/studio/[[...tool]]/page.tsx"
+          ],
+          "dependencies": ["T11", "T12"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G3"
+        }
+      ]
+    },
+    {
+      "id": "G4",
+      "name": "Global Layout",
+      "description": "Root layout, header, footer, mobile navigation, cart drawer",
+      "tasks": [
+        {
+          "id": "T15",
+          "title": "Build root layout with metadata, fonts, and page shell",
+          "description": "Create app/layout.tsx as the root Server Component layout. Include: HTML lang attribute, metadata export (title, description, Open Graph for handofya.com), font loading (self-hosted variable fonts from public/fonts/ or Google Fonts via next/font), body with antialiased class, Header component, main element wrapping children, Footer component. Follow the SecureClear pattern of metadata in the root layout.",
+          "files": [
+            "projects/handofya/web/src/app/layout.tsx"
+          ],
+          "dependencies": ["T8", "T9"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G4"
+        },
+        {
+          "id": "T16",
+          "title": "Build Header with desktop navigation and mobile trigger",
+          "description": "Create components/layout/Header.tsx. Desktop: brand logo (left), horizontal nav links (Shop dropdown with categories, Journal, Learn, About), right side (Account icon, Cart icon with badge showing item count). Mobile: brand logo (left), hamburger menu button (right), cart icon. Shop dropdown on desktop shows category links fetched from Sanity (or hardcoded for MVP: Face, Supplements, Hair Oils, Eye Cremes, Face Masques, Fragrances). Sticky header on scroll. Calm, minimal design per PRD.",
+          "files": [
+            "projects/handofya/web/src/components/layout/Header.tsx"
+          ],
+          "dependencies": ["T8", "T9"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G4"
+        },
+        {
+          "id": "T17",
+          "title": "Build Footer with links, newsletter, and social icons",
+          "description": "Create components/layout/Footer.tsx. Sections: brand logo + tagline, navigation links (Shop, Journal, Learn, About, Contact), policy links (FAQ, Shipping/Returns, Terms, Privacy), newsletter signup form (uses NewsletterForm component), social media icons (Instagram, Facebook, Twitter/X, YouTube) linking to brand accounts. Copyright line at bottom.",
+          "files": [
+            "projects/handofya/web/src/components/layout/Footer.tsx"
+          ],
+          "dependencies": ["T8", "T9"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G4"
+        },
+        {
+          "id": "T18",
+          "title": "Build MobileNav slide-out drawer",
+          "description": "Create components/layout/MobileNav.tsx. Slide-out drawer from the left (or full-screen overlay). Shows: close button, nav links (Shop with expandable category list, Journal, Learn, About, Contact), account link, cart link. Smooth animation (transform + opacity transition). Accessible: focus trap, ESC to close, aria attributes.",
+          "files": [
+            "projects/handofya/web/src/components/layout/MobileNav.tsx"
+          ],
+          "dependencies": ["T8", "T16"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G4"
+        },
+        {
+          "id": "T19",
+          "title": "Build CartDrawer slide-out component",
+          "description": "Create components/layout/CartDrawer.tsx. Slide-out drawer from the right. Shows cart line items (image thumbnail, name, quantity, price, subscription badge), subtotal, 'View Cart' button linking to /cart, 'Checkout' button linking to /checkout. Empty state message when cart is empty. Accessible: focus trap, ESC to close.",
+          "files": [
+            "projects/handofya/web/src/components/layout/CartDrawer.tsx"
+          ],
+          "dependencies": ["T8", "T9"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G4"
+        }
+      ]
+    },
+    {
+      "id": "G5",
+      "name": "Product Catalog",
+      "description": "Product listing pages, category pages, and product detail pages",
+      "tasks": [
+        {
+          "id": "T20",
+          "title": "Build product components (ProductCard, ProductGrid, ProductImages)",
+          "description": "Create components/product/ProductCard.tsx: displays product image (Sanity CDN, next/image), product name, price, link to /shop/[slug]. Consistent image aspect ratio. Create components/product/ProductGrid.tsx: responsive grid (1 col mobile, 2 tablet, 3 desktop). Create components/product/ProductImages.tsx: main image with thumbnail gallery, zoom on click/hover.",
+          "files": [
+            "projects/handofya/web/src/components/product/ProductCard.tsx",
+            "projects/handofya/web/src/components/product/ProductGrid.tsx",
+            "projects/handofya/web/src/components/product/ProductImages.tsx"
+          ],
+          "dependencies": ["T8", "T13"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G5"
+        },
+        {
+          "id": "T21",
+          "title": "Build SubscriptionToggle and AddToCart components",
+          "description": "Create components/product/SubscriptionToggle.tsx: toggle between one-time and subscription purchase. When subscription selected, show frequency dropdown (Monthly, Every 2 Months, Every 3 Months). Show any savings percentage if applicable. Create components/product/AddToCart.tsx: 'Add to Cart' button that adds item to cart state with subscription metadata if toggled. Shows loading state during add. Opens CartDrawer on success.",
+          "files": [
+            "projects/handofya/web/src/components/product/SubscriptionToggle.tsx",
+            "projects/handofya/web/src/components/product/AddToCart.tsx"
+          ],
+          "dependencies": ["T8", "T9"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G5"
+        },
+        {
+          "id": "T22",
+          "title": "Build Shop page (all products) and Category pages",
+          "description": "Create app/(shop)/shop/page.tsx as Server Component: fetches all active products from Sanity, renders ProductGrid. Create app/(shop)/shop/[category]/page.tsx as Server Component: fetches products by category slug, renders category name heading + description + ProductGrid. Implement generateStaticParams() for SSG of all 6 categories. Implement generateMetadata() for SEO.",
+          "files": [
+            "projects/handofya/web/src/app/(shop)/shop/page.tsx",
+            "projects/handofya/web/src/app/(shop)/shop/[category]/page.tsx"
+          ],
+          "dependencies": ["T13", "T15", "T20"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G5"
+        },
+        {
+          "id": "T23",
+          "title": "Build Product Detail Page",
+          "description": "Create app/(shop)/shop/[slug]/page.tsx as Server Component. Two-column layout on desktop (images left, info right), single column on mobile. Displays: ProductImages gallery, product name, price, SubscriptionToggle (if eligible), AddToCart button, description (PortableText), ingredients list (expandable, linking to /ingredients/[slug]), usage instructions (PortableText), related products grid (3 items from same category). Implement generateStaticParams() for SSG. Implement generateMetadata() with product SEO fields.",
+          "files": [
+            "projects/handofya/web/src/app/(shop)/shop/[slug]/page.tsx"
+          ],
+          "dependencies": ["T13", "T15", "T20", "T21", "T10"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G5"
+        }
+      ]
+    },
+    {
+      "id": "G6",
+      "name": "Shopping Cart",
+      "description": "Cart state management, cart page, and cart drawer integration",
+      "tasks": [
+        {
+          "id": "T24",
+          "title": "Implement cart state management",
+          "description": "Create lib/cart.ts with cart logic. For guests: localStorage-based cart (read/write JSON array of CartItem). For authenticated users: mirror cart to Supabase (optional for MVP, can defer server-side cart sync). Exports: getCart(), addToCart(item), updateQuantity(slug, quantity), removeFromCart(slug), clearCart(), getCartTotal(). Use React context or zustand for in-memory state shared across components. Cart badge count in Header updates reactively.",
+          "files": [
+            "projects/handofya/web/src/lib/cart.ts"
+          ],
+          "dependencies": ["T7"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G6"
+        },
+        {
+          "id": "T25",
+          "title": "Build CartLineItem and CartSummary components",
+          "description": "Create components/cart/CartLineItem.tsx: product image thumbnail, name, unit price, quantity selector (+ / -), line total, subscription badge with frequency if subscription item, remove button. Create components/cart/CartSummary.tsx: subtotal, estimated shipping (flat rate or free-above-threshold), estimated tax placeholder, order total, 'Proceed to Checkout' button.",
+          "files": [
+            "projects/handofya/web/src/components/cart/CartLineItem.tsx",
+            "projects/handofya/web/src/components/cart/CartSummary.tsx"
+          ],
+          "dependencies": ["T8", "T9", "T24"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G6"
+        },
+        {
+          "id": "T26",
+          "title": "Build full Cart page",
+          "description": "Create app/(checkout)/cart/page.tsx. Uses the (checkout) route group. Displays CartLineItem for each item, CartSummary on the right (desktop) or below (mobile). Empty cart state with 'Continue Shopping' link to /shop. 'Proceed to Checkout' button links to /checkout.",
+          "files": [
+            "projects/handofya/web/src/app/(checkout)/cart/page.tsx"
+          ],
+          "dependencies": ["T24", "T25", "T15"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G6"
+        }
+      ]
+    },
+    {
+      "id": "G7",
+      "name": "Stripe Checkout and Subscriptions",
+      "description": "Checkout flow, Stripe integration, webhook handling, order creation",
+      "tasks": [
+        {
+          "id": "T27",
+          "title": "Build checkout API route",
+          "description": "Create app/api/checkout/route.ts. POST handler: validate input with Zod (items array, shipping address). If authenticated, get or create Stripe Customer (look up stripe_customer_id in customers table, create if null). Create Stripe Checkout Session: mode 'payment' for one-time items, mode 'subscription' for subscription items. Include line_items, shipping options, automatic_tax, success_url, cancel_url, metadata. Return { sessionId, url }. Handle errors: return appropriate status codes. Install zod.",
+          "files": [
+            "projects/handofya/web/src/app/api/checkout/route.ts"
+          ],
+          "dependencies": ["T5", "T3", "T7"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G7"
+        },
+        {
+          "id": "T28",
+          "title": "Build Stripe webhook handler",
+          "description": "Create app/api/webhooks/stripe/route.ts. POST handler: read raw body, verify Stripe signature using STRIPE_WEBHOOK_SECRET. Handle events: checkout.session.completed (create order in Supabase, send confirmation email via Listmonk, create subscription record if subscription mode), invoice.paid (create renewal order, update subscription next_billing_date), customer.subscription.updated (update subscription status/frequency in Supabase), customer.subscription.deleted (mark subscription cancelled). Export config = { api: { bodyParser: false } } for raw body access.",
+          "files": [
+            "projects/handofya/web/src/app/api/webhooks/stripe/route.ts"
+          ],
+          "dependencies": ["T5", "T3", "T6", "T7"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G7"
+        },
+        {
+          "id": "T29",
+          "title": "Build checkout page with Stripe redirect",
+          "description": "Create app/(checkout)/checkout/page.tsx. Client component. Uses (checkout) route group with minimal layout (no header nav, no footer, just logo + back-to-cart link). Shipping address form, shipping method selection. On submit: POST /api/checkout, redirect to Stripe Checkout URL. Show loading state during API call. Handle errors with user-facing messages. Create app/(checkout)/layout.tsx with minimal chrome for distraction-free checkout.",
+          "files": [
+            "projects/handofya/web/src/app/(checkout)/checkout/page.tsx",
+            "projects/handofya/web/src/app/(checkout)/layout.tsx"
+          ],
+          "dependencies": ["T24", "T27", "T8", "T9"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G7"
+        },
+        {
+          "id": "T30",
+          "title": "Build checkout success page",
+          "description": "Create app/(checkout)/checkout/success/page.tsx. Reads session_id from URL params. Fetches order details from Supabase (or Stripe session). Displays order confirmation: order number, line items, total, shipping address, estimated delivery. Clears cart from localStorage. Link to /account/orders for authenticated users, link to /shop for guests. Offer account creation for guest checkouts.",
+          "files": [
+            "projects/handofya/web/src/app/(checkout)/checkout/success/page.tsx"
+          ],
+          "dependencies": ["T28", "T29"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G7"
+        }
+      ]
+    },
+    {
+      "id": "G8",
+      "name": "Customer Accounts",
+      "description": "Authentication, account dashboard, order history, subscription management, wishlists",
+      "tasks": [
+        {
+          "id": "T31",
+          "title": "Build auth pages (login, signup, callback)",
+          "description": "Create app/(auth)/login/page.tsx: email input, 'Send Magic Link' button, calls supabase.auth.signInWithOtp(). Success state shows 'Check your email'. Create app/(auth)/signup/page.tsx: same flow (Supabase OTP handles both new and existing users). Create app/(auth)/auth/callback/page.tsx: adapted from SecureClear pattern -- listens for onAuthStateChange, creates customer record in Supabase if new (INSERT INTO customers ON CONFLICT DO NOTHING), stores session, redirects to /account.",
+          "files": [
+            "projects/handofya/web/src/app/(auth)/login/page.tsx",
+            "projects/handofya/web/src/app/(auth)/signup/page.tsx",
+            "projects/handofya/web/src/app/(auth)/auth/callback/page.tsx"
+          ],
+          "dependencies": ["T3", "T8", "T9"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G8"
+        },
+        {
+          "id": "T32",
+          "title": "Build account layout with auth guard",
+          "description": "Create app/(account)/layout.tsx: checks Supabase auth session. If not authenticated, redirect to /login. If authenticated, render account shell with sidebar navigation (Dashboard, Orders, Subscriptions, Wishlist, Settings). Mobile: top tabs or hamburger. Pass customer data to children via context or props.",
+          "files": [
+            "projects/handofya/web/src/app/(account)/layout.tsx"
+          ],
+          "dependencies": ["T3", "T8", "T15"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G8"
+        },
+        {
+          "id": "T33",
+          "title": "Build account dashboard and settings pages",
+          "description": "Create app/(account)/account/page.tsx: welcome message, quick links to orders/subscriptions/wishlist, recent order summary. Create app/(account)/account/settings/page.tsx: name edit, email display (read-only, from Supabase auth), logout button.",
+          "files": [
+            "projects/handofya/web/src/app/(account)/account/page.tsx",
+            "projects/handofya/web/src/app/(account)/account/settings/page.tsx"
+          ],
+          "dependencies": ["T32"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G8"
+        },
+        {
+          "id": "T34",
+          "title": "Build order history page and API route",
+          "description": "Create app/api/orders/route.ts: GET handler, verify auth, query orders table WHERE customer_id = user.id ORDER BY created_at DESC. Return Order[]. Create app/(account)/account/orders/page.tsx: list of orders with date, order number, status badge, total, expandable line items. Create components/account/OrderList.tsx.",
+          "files": [
+            "projects/handofya/web/src/app/api/orders/route.ts",
+            "projects/handofya/web/src/app/(account)/account/orders/page.tsx",
+            "projects/handofya/web/src/components/account/OrderList.tsx"
+          ],
+          "dependencies": ["T32", "T3", "T7"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G8"
+        },
+        {
+          "id": "T35",
+          "title": "Build subscription management page and API routes",
+          "description": "Create app/api/subscriptions/route.ts: GET handler returns customer subscriptions (join Supabase data with Stripe subscription details). Create app/api/subscriptions/[id]/route.ts: PATCH handler for update frequency, pause, resume; DELETE handler for cancel. All handlers verify auth and subscription ownership. Create app/(account)/account/subscriptions/page.tsx: list of active/paused/cancelled subscriptions. Create components/account/SubscriptionCard.tsx: shows product, frequency, next billing date, status, action buttons (change frequency, pause, resume, cancel).",
+          "files": [
+            "projects/handofya/web/src/app/api/subscriptions/route.ts",
+            "projects/handofya/web/src/app/api/subscriptions/[id]/route.ts",
+            "projects/handofya/web/src/app/(account)/account/subscriptions/page.tsx",
+            "projects/handofya/web/src/components/account/SubscriptionCard.tsx"
+          ],
+          "dependencies": ["T32", "T5", "T3", "T7"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G8"
+        },
+        {
+          "id": "T36",
+          "title": "Build wishlist page and API routes",
+          "description": "Create app/api/wishlist/route.ts: GET handler returns wishlist items (product slugs), POST handler adds item. Create app/api/wishlist/[slug]/route.ts: DELETE handler removes item. All verify auth. Create app/(account)/account/wishlist/page.tsx: grid of wishlisted products (fetch product details from Sanity by slug). Create components/account/WishlistGrid.tsx. Add wishlist heart icon to ProductCard (toggle on click, calls POST or DELETE /api/wishlist).",
+          "files": [
+            "projects/handofya/web/src/app/api/wishlist/route.ts",
+            "projects/handofya/web/src/app/api/wishlist/[slug]/route.ts",
+            "projects/handofya/web/src/app/(account)/account/wishlist/page.tsx",
+            "projects/handofya/web/src/components/account/WishlistGrid.tsx"
+          ],
+          "dependencies": ["T32", "T3", "T7", "T20"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G8"
+        }
+      ]
+    },
+    {
+      "id": "G9",
+      "name": "Content Pages",
+      "description": "Journal, Learn, Ingredients, About, Contact, FAQ, policy pages",
+      "tasks": [
+        {
+          "id": "T37",
+          "title": "Build Journal listing and post pages",
+          "description": "Create app/(content)/journal/page.tsx: Server Component, fetches journal posts from Sanity (paginated, reverse chronological). Featured post at top (large image), grid of recent posts below. Create app/(content)/journal/[slug]/page.tsx: individual post with editorial layout, generous margins, featured image, body (PortableText), author/date, social sharing buttons, related posts at bottom. Create components/content/JournalCard.tsx. Implement generateStaticParams() and generateMetadata().",
+          "files": [
+            "projects/handofya/web/src/app/(content)/journal/page.tsx",
+            "projects/handofya/web/src/app/(content)/journal/[slug]/page.tsx",
+            "projects/handofya/web/src/components/content/JournalCard.tsx"
+          ],
+          "dependencies": ["T13", "T15", "T10", "T8"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G9"
+        },
+        {
+          "id": "T38",
+          "title": "Build Learn hub and article pages",
+          "description": "Create app/(content)/learn/page.tsx: Server Component, fetches learn articles from Sanity. Grid of articles with featured images. Create app/(content)/learn/[slug]/page.tsx: article with body (PortableText), related products section at bottom linking to product pages. Implement generateStaticParams() and generateMetadata().",
+          "files": [
+            "projects/handofya/web/src/app/(content)/learn/page.tsx",
+            "projects/handofya/web/src/app/(content)/learn/[slug]/page.tsx"
+          ],
+          "dependencies": ["T13", "T15", "T10", "T8"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G9"
+        },
+        {
+          "id": "T39",
+          "title": "Build Ingredient database pages",
+          "description": "Create app/(content)/ingredients/page.tsx: Server Component, fetches all ingredients from Sanity. Alphabetical listing or grouped display. Client-side search/filter (text input filters the list). Create app/(content)/ingredients/[slug]/page.tsx: ingredient detail with name, description (PortableText), benefits list, and 'Products containing this ingredient' section (reverse lookup via GROQ: products where ingredients array contains this ingredient). Create components/content/IngredientList.tsx.",
+          "files": [
+            "projects/handofya/web/src/app/(content)/ingredients/page.tsx",
+            "projects/handofya/web/src/app/(content)/ingredients/[slug]/page.tsx",
+            "projects/handofya/web/src/components/content/IngredientList.tsx"
+          ],
+          "dependencies": ["T13", "T15", "T10", "T8"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G9"
+        },
+        {
+          "id": "T40",
+          "title": "Build informational pages and API routes (About, Contact, FAQ, policies)",
+          "description": "Create app/(content)/about/page.tsx: fetches 'about' page from Sanity, renders PortableText. Create app/(content)/contact/page.tsx: contact form (name, email, message) + brand info. Create app/api/contact/route.ts: validates with Zod, sends email via Listmonk transactional API (or direct SMTP). Rate-limited. Create app/(content)/faq/page.tsx: fetches FAQ page from Sanity (or structured FAQ entries). Create app/(content)/shipping-returns/page.tsx, terms/page.tsx, privacy/page.tsx: all fetch from Sanity page type. Create app/api/newsletter/route.ts: POST handler, calls Listmonk addSubscriber().",
+          "files": [
+            "projects/handofya/web/src/app/(content)/about/page.tsx",
+            "projects/handofya/web/src/app/(content)/contact/page.tsx",
+            "projects/handofya/web/src/app/api/contact/route.ts",
+            "projects/handofya/web/src/app/(content)/faq/page.tsx",
+            "projects/handofya/web/src/app/(content)/shipping-returns/page.tsx",
+            "projects/handofya/web/src/app/(content)/terms/page.tsx",
+            "projects/handofya/web/src/app/(content)/privacy/page.tsx",
+            "projects/handofya/web/src/app/api/newsletter/route.ts"
+          ],
+          "dependencies": ["T13", "T15", "T10", "T6", "T8", "T9"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G9"
+        }
+      ]
+    },
+    {
+      "id": "G10",
+      "name": "Homepage",
+      "description": "Homepage with hero, featured products, journal preview, brand story, newsletter",
+      "tasks": [
+        {
+          "id": "T41",
+          "title": "Build Homepage",
+          "description": "Create app/page.tsx as Server Component. Sections: (1) Hero -- single striking product/lifestyle image, minimal text, CTA button to /shop. No carousel. Static, confident composition. (2) Featured Products -- curated grid of 3 products fetched from Sanity (featured flag or manual selection). (3) Journal Preview -- 1-2 recent journal posts with editorial imagery. (4) Brand Story Teaser -- single paragraph with link to /about. (5) Newsletter Signup -- minimal form using NewsletterForm component. Design must follow PRD section 8: visual stillness, one focal point per viewport, generous whitespace.",
+          "files": [
+            "projects/handofya/web/src/app/page.tsx"
+          ],
+          "dependencies": ["T13", "T15", "T20", "T9", "T10"],
+          "verification": "cd projects/handofya/web && npm run build",
+          "group": "G10"
+        }
+      ]
+    },
+    {
+      "id": "G11",
+      "name": "SEO",
+      "description": "Structured data, sitemap, robots.txt, meta tags, Open Graph",
+      "tasks": [
+        {
+          "id": "T42",
+          "title": "Implement SEO: sitemap, robots.txt, structured data",
+          "description": "Create app/sitemap.ts: dynamic sitemap fetching all product slugs, journal post slugs, learn article slugs, ingredient slugs, and static pages from Sanity. Create app/robots.ts: allow all crawlers, reference sitemap URL, disallow /studio and /api. Add JSON-LD structured data to product pages (Product + Offer schema), journal posts (Article schema), and all pages (BreadcrumbList schema). Verify all pages have unique generateMetadata() with title, description, and Open Graph tags. Add canonical URL to all pages.",
+          "files": [
+            "projects/handofya/web/src/app/sitemap.ts",
+            "projects/handofya/web/src/app/robots.ts"
+          ],
+          "dependencies": ["T22", "T23", "T37", "T38", "T39", "T40", "T41"],
+          "verification": "cd projects/handofya/web && npm run build && curl http://localhost:3000/sitemap.xml | head -20",
+          "group": "G11"
+        }
+      ]
+    },
+    {
+      "id": "G12",
+      "name": "Sanity Revalidation Webhook",
+      "description": "On-demand ISR revalidation triggered by Sanity content changes",
+      "tasks": [
+        {
+          "id": "T43",
+          "title": "Build Sanity revalidation webhook API route",
+          "description": "Create app/api/revalidate/route.ts: POST handler that receives Sanity webhook payloads when content is published/updated/deleted. Verify webhook secret (SANITY_WEBHOOK_SECRET header). Based on document type, call revalidateTag() or revalidatePath() to invalidate ISR cache for affected pages. Product changes revalidate /shop, /shop/[category], /shop/[slug]. Journal changes revalidate /journal, /journal/[slug]. Ingredient changes revalidate /ingredients. Return { revalidated: true, paths: [...] }.",
+          "files": [
+            "projects/handofya/web/src/app/api/revalidate/route.ts"
+          ],
+          "dependencies": ["T22", "T23", "T37"],
+          "verification": "cd projects/handofya/web && npx tsc --noEmit",
+          "group": "G12"
+        }
+      ]
+    },
+    {
+      "id": "G13",
+      "name": "Performance Optimization",
+      "description": "Image optimization, lazy loading, bundle analysis, Lighthouse targets",
+      "tasks": [
+        {
+          "id": "T44",
+          "title": "Performance optimization pass",
+          "description": "Audit and optimize: (1) Images -- verify all product images use next/image with Sanity CDN, responsive srcset, WebP/AVIF format, lazy loading below the fold, explicit width/height to prevent CLS. (2) Fonts -- ensure variable fonts are loaded with font-display: swap and preloaded. (3) Bundle -- analyze with @next/bundle-analyzer, verify no unnecessary client-side JavaScript on Server Component pages. (4) Third-party scripts -- defer analytics, load Stripe.js only on checkout page. (5) Caching -- verify ISR revalidation times are appropriate (products: 3600s, journal: 3600s, pages: 86400s). Target: Lighthouse 90+ mobile, LCP < 2.5s, CLS < 0.1.",
+          "files": [],
+          "dependencies": ["T41", "T42"],
+          "verification": "npx lighthouse http://localhost:3000 --output=json --only-categories=performance | jq '.categories.performance.score'",
+          "group": "G13"
+        }
+      ]
+    },
+    {
+      "id": "G14",
+      "name": "Testing",
+      "description": "Playwright E2E test suite",
+      "tasks": [
+        {
+          "id": "T45",
+          "title": "Set up Playwright and write E2E test suite",
+          "description": "Create playwright.config.ts with base URL, browser config (Chromium, Firefox, WebKit), and screenshot settings. Write test files: tests/layout.spec.ts (header renders, nav links work, footer renders, mobile nav opens), tests/product.spec.ts (product grid renders, product detail page loads, subscription toggle works), tests/cart.spec.ts (add to cart, update quantity, remove item, cart persists on reload), tests/checkout.spec.ts (checkout form renders, validation works; mock Stripe for submission), tests/account.spec.ts (login page renders, auth callback redirects; mock Supabase auth), tests/content.spec.ts (journal listing renders, journal post loads, ingredient search works, contact form submits). Use page.route() for API mocking consistent with SecureClear pattern.",
+          "files": [
+            "projects/handofya/web/playwright.config.ts",
+            "projects/handofya/web/tests/layout.spec.ts",
+            "projects/handofya/web/tests/product.spec.ts",
+            "projects/handofya/web/tests/cart.spec.ts",
+            "projects/handofya/web/tests/checkout.spec.ts",
+            "projects/handofya/web/tests/account.spec.ts",
+            "projects/handofya/web/tests/content.spec.ts"
+          ],
+          "dependencies": ["T41"],
+          "verification": "cd projects/handofya/web && npx playwright test --reporter=list",
+          "group": "G14"
+        }
+      ]
+    },
+    {
+      "id": "G15",
+      "name": "Deployment Configuration",
+      "description": "Vercel setup, environment variables, DNS, Listmonk on Render",
+      "tasks": [
+        {
+          "id": "T46",
+          "title": "Configure Vercel deployment and Listmonk on Render",
+          "description": "Create Vercel project linked to the repository. Configure: root directory as projects/handofya/web, build command: npm run build, output directory: .next, Node.js 20.x. Set all environment variables (Supabase, Sanity, Stripe, Listmonk). Configure custom domain: handofya.com. Set up Listmonk Docker container on Render: Dockerfile or Render blueprint, PostgreSQL database for Listmonk, SMTP relay configuration (SES or Postmark), configure SPF/DKIM/DMARC DNS records for handofya.com. Register Stripe webhook endpoint: https://handofya.com/api/webhooks/stripe. Configure Sanity webhook: POST to https://handofya.com/api/revalidate on document publish.",
+          "files": [
+            "projects/handofya/web/vercel.json"
+          ],
+          "dependencies": ["T44", "T45"],
+          "verification": "curl -I https://handofya.com && curl https://listmonk.handofya.com/api/health",
+          "group": "G15"
+        }
+      ]
+    }
+  ]
+}

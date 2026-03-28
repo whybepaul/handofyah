@@ -1,0 +1,121 @@
+{
+  "meta": {
+    "project": "Hand of Yah Skincare",
+    "aesthetic": "Sacred Apothecary — warm, earthy, refined",
+    "license": "Unsplash License (free for commercial use, no attribution required but appreciated)",
+    "created": "2026-03-27",
+    "notes": "All images sourced from Unsplash. Direct URLs use w=1200&q=80 for high-quality web display. Replace with actual product photography when available."
+  },
+  "images": [
+    {
+      "id": "hero",
+      "description": "Brown glass essential oil bottle with dropper on a wooden table with candles — warm spa atmosphere with amber tones, wooden textures, and soft candlelight creating an intimate apothecary feel",
+      "unsplashUrl": "https://unsplash.com/photos/7n5_0j7b7Hg",
+      "directUrl": "https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?w=1200&q=80",
+      "photographer": "Anshu A",
+      "photographerProfile": "https://unsplash.com/@anshu18",
+      "placement": "Hero section — main product showcase",
+      "whyChosen": "Warm candlelit ambiance with amber glass bottle on wooden surface perfectly captures the Sacred Apothecary aesthetic. Natural materials and warm lighting."
+    },
+    {
+      "id": "product-facial-oil",
+      "description": "Brown glass bottle on a beige wooden surface — minimal, warm essential oil bottle with soft natural lighting and earthy neutral background",
+      "unsplashUrl": "https://unsplash.com/photos/ayXr2lndU8E",
+      "directUrl": "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1200&q=80",
+      "photographer": "Kelly Sikkema",
+      "photographerProfile": "https://unsplash.com/@kellysikkema",
+      "placement": "Product card 1 — Facial Oil",
+      "whyChosen": "Clean, minimal composition with an amber glass bottle on warm beige wood. Feels refined and premium without being clinical. Perfect for a facial oil product card."
+    },
+    {
+      "id": "product-creme",
+      "description": "Natural cosmetics set with moisturizing cream in eco-friendly bamboo jar and serum in dropper bottle — organic skincare product packaging on neutral background",
+      "unsplashUrl": "https://unsplash.com/photos/RLxWVl7dCg8",
+      "directUrl": "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=1200&q=80",
+      "photographer": "Content Pixie",
+      "photographerProfile": "https://unsplash.com/@contentpixie",
+      "placement": "Product card 2 — Creme",
+      "whyChosen": "Eco-friendly bamboo jar with natural, organic aesthetic. Clean packaging design with earth-tone materials matches the artisanal skincare brand positioning."
+    },
+    {
+      "id": "product-face-masque",
+      "description": "Green powder on a spoon — earthy matcha/clay powder in a flat-lay composition with natural green tones, suitable as a visual stand-in for a green clay face masque",
+      "unsplashUrl": "https://unsplash.com/photos/aX4lfNhuCH4",
+      "directUrl": "https://images.unsplash.com/photo-1564894809611-1742fc40ed80?w=1200&q=80",
+      "photographer": "Alice Pasqual",
+      "photographerProfile": "https://unsplash.com/@stdarkmoon",
+      "placement": "Product card 3 — Face Masque",
+      "whyChosen": "Rich green powder evokes clay/botanical masque ingredients. Earthy, natural tone with organic texture feels authentic to a handcrafted skincare masque."
+    },
+    {
+      "id": "brand-story-lifestyle",
+      "description": "Person holding an amber glass bottle — close-up of hands with an essential oil or serum bottle, warm dark tones with soft lighting suggesting an intimate skincare ritual",
+      "unsplashUrl": "https://unsplash.com/photos/0MoF-Fe0w0A",
+      "directUrl": "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=1200&q=80",
+      "photographer": "Christin Hume",
+      "photographerProfile": "https://unsplash.com/@christinhumephoto",
+      "placement": "Brand story section — lifestyle/ritual image",
+      "whyChosen": "Hands holding an amber bottle captures the intimate, ritualistic aspect of skincare. Warm, moody lighting with dark tones feels sacred and intentional — core to the brand narrative."
+    },
+    {
+      "id": "journal-post-1",
+      "description": "Essential oil bottles with dried lavender and amethyst crystals on a table — botanical flat-lay arrangement with warm, earthy purple and amber tones",
+      "unsplashUrl": "https://unsplash.com/photos/lg9QrSa8VaQ",
+      "directUrl": "https://images.unsplash.com/photo-1676968945989-71c5c543e736?w=1200&q=80",
+      "photographer": "Laura Olsen",
+      "photographerProfile": "https://unsplash.com/@lauraolsen",
+      "placement": "Journal post 1 — botanical ingredients flat-lay",
+      "whyChosen": "Beautiful arrangement of essential oil bottles, dried lavender, and amethyst on a warm surface. Botanical ingredients plus crystal elements feel premium, natural, and aligned with the sacred apothecary theme."
+    },
+    {
+      "id": "journal-post-2",
+      "description": "A white candle on a table next to a woven basket — warm, calming wellness scene with soft natural tones evoking self-care and relaxation",
+      "unsplashUrl": "https://unsplash.com/photos/JY7JKX4-1dI",
+      "directUrl": "https://images.unsplash.com/photo-1679496813133-2a08b6e488d8?w=1200&q=80",
+      "photographer": "Anita Austvika",
+      "photographerProfile": "https://unsplash.com/@anitaaustvika",
+      "placement": "Journal post 2 — self-care lifestyle scene",
+      "whyChosen": "Warm, minimal self-care scene with candle and woven textures. Calming and grounded — perfect for a wellness journal post about rituals and intention."
+    },
+    {
+      "id": "ingredient-database-banner",
+      "description": "Amber glass spray bottle, homemade soap, and moisturizer cream on a wooden board with green leaves — top-view arrangement of natural organic beauty products and raw ingredients",
+      "unsplashUrl": "https://unsplash.com/photos/xwHW-njZqDs",
+      "directUrl": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1200&q=80",
+      "photographer": "Content Pixie",
+      "photographerProfile": "https://unsplash.com/@contentpixie",
+      "placement": "Ingredient database banner",
+      "whyChosen": "Top-down view of natural ingredients and products on warm wood with green botanical elements. Shows raw, organic materials that communicate ingredient transparency and natural formulation."
+    },
+    {
+      "id": "hero-alternate",
+      "description": "Amber glass cosmetic bottles set with monstera leaf on green background — natural organic beauty products packaging arrangement without labels",
+      "unsplashUrl": "https://unsplash.com/photos/Z7XKZzCgZUo",
+      "directUrl": "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=1200&q=80",
+      "photographer": "Content Pixie",
+      "photographerProfile": "https://unsplash.com/@contentpixie",
+      "placement": "Hero section alternate / product collection",
+      "whyChosen": "Multiple amber glass bottles in a clean arrangement with botanical elements. Works well as an alternate hero or product collection overview. Label-free bottles allow the viewer to project the brand onto them."
+    },
+    {
+      "id": "about-page",
+      "description": "Amber glass bottles with essential oils in warm light — multiple brown glass bottles suggesting an apothecary collection with soft, warm reflections",
+      "unsplashUrl": "https://unsplash.com/photos/E3HAXh7o0hI",
+      "directUrl": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80",
+      "photographer": "Kelly Sikkema",
+      "photographerProfile": "https://unsplash.com/@kellysikkema",
+      "placement": "About page / brand philosophy",
+      "whyChosen": "Collection of amber glass bottles evoking an apothecary shelf. Warm, dark tones with essential oil bottles feel artisanal and craft-focused — perfect for telling the brand story."
+    },
+    {
+      "id": "serum-detail",
+      "description": "Serum being poured from a dropper bottle — golden hour close-up of skincare serum with warm, luminous drops",
+      "unsplashUrl": "https://unsplash.com/photos/j24HPh0Q84g",
+      "directUrl": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=1200&q=80",
+      "photographer": "Mona Jain",
+      "photographerProfile": "https://unsplash.com/@monajain",
+      "placement": "Product detail page / serum close-up",
+      "whyChosen": "Close-up of golden serum being dispensed from a dropper. Golden hour lighting creates a warm, luminous quality that highlights product texture and feels luxurious."
+    }
+  ]
+}

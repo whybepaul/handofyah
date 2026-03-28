@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hand of Yah — Skincare is Self-Care</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    /* ═══════════════════════════════════════════
+       HAND OF YAH — Design System Prototype
+       Concept: Sacred Apothecary
+       ═══════════════════════════════════════════ */
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --parchment: #F5F0E8;
+      --umber: #2C2420;
+      --terracotta: #C4704B;
+      --sage: #8B9A7E;
+      --stone: #E8E2D8;
+      --taupe: #B8AFA6;
+      --espresso: #1A1614;
+      --amber: #D4A574;
+      --linen: #FAF7F2;
+      --clay: #A85E3A;
+
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', 'Helvetica Neue', sans-serif;
+
+      --ease-entrance: cubic-bezier(0, 0, 0.2, 1);
+      --max-width: 1280px;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--umber);
+      background-color: var(--parchment);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Texture Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ── Utility Classes ── */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 0 1.25rem; }
+    }
+
+    .label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--taupe);
+    }
+
+    /* ── Scroll Animations ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s var(--ease-entrance), transform 0.6s var(--ease-entrance);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+    .reveal-stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
+    .reveal-stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
+    .reveal-stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
+
+    /* ═══════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════ */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--parchment);
+      transition: box-shadow 0.3s ease;
+    }
+
+    header.scrolled {
+      box-shadow: 0 1px 0 rgba(44, 36, 32, 0.08);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .wordmark {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--umber);
+      text-decoration: none;
+    }
+
+    .nav-main {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-main a {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--umber);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+
+    .nav-main a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--terracotta);
+      transition: width 0.3s var(--ease-entrance);
+    }
+
+    .nav-main a:hover {
+      color: var(--terracotta);
+    }
+
+    .nav-main a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .nav-actions a {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--umber);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav-actions a:hover {
+      color: var(--terracotta);
+    }
+
+    .cart-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .cart-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Mobile nav */
+    .nav-mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    .nav-mobile-toggle span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--umber);
+      margin: 5px 0;
+      transition: all 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .nav-main, .nav-actions a:not(.cart-icon) { display: none; }
+      .nav-mobile-toggle { display: block; }
+    }
+
+    /* ═══════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════ */
+    .hero {
+      padding-top: 72px;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      background: var(--stone);
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content {
+      padding: 4rem 0;
+    }
+
+    .hero-overline {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--terracotta);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--umber);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-subtitle {
+      font-family: var(--font-body);
+      font-size: 1.125rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--umber);
+      opacity: 0.8;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-image {
+      position: relative;
+      height: 85vh;
+      margin-top: -72px; /* offset the header */
+      overflow: hidden;
+    }
+
+    .hero-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--taupe) 0%, #9A8E82 40%, var(--amber) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-image-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 60% 50%, rgba(212, 165, 116, 0.3) 0%, transparent 60%);
+    }
+
+    .hero-image-label {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--parchment);
+      opacity: 0.7;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .hero-image-label span {
+      display: block;
+      font-size: 0.625rem;
+      margin-top: 0.25rem;
+      opacity: 0.6;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-title { font-size: 3.5rem; }
+    }
+
+    @media (max-width: 768px) {
+      .hero { min-height: auto; }
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .hero-content {
+        padding: 3rem 0 2rem;
+        order: 2;
+      }
+      .hero-image {
+        height: 50vh;
+        margin-top: 0;
+        order: 1;
+      }
+      .hero-title { font-size: 2.75rem; }
+    }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--parchment);
+      background: var(--terracotta);
+      border: none;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s var(--ease-entrance);
+    }
+
+    .btn-primary:hover {
+      background: var(--clay);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--umber);
+      background: transparent;
+      border: 1px solid var(--umber);
+      padding: 1rem 2rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.3s var(--ease-entrance);
+    }
+
+    .btn-secondary:hover {
+      background: var(--stone);
+    }
+
+    .btn-text {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--umber);
+      text-decoration: none;
+      position: relative;
+    }
+
+    .btn-text::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--terracotta);
+      transition: width 0.3s var(--ease-entrance);
+    }
+
+    .btn-text:hover::after {
+      width: 100%;
+    }
+
+    /* ═══════════════════════════════════════════
+       PHILOSOPHY STRIP
+       ═══════════════════════════════════════════ */
+    .philosophy {
+      padding: 5rem 0;
+      text-align: center;
+      background: var(--parchment);
+    }
+
+    .philosophy-text {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 300;
+      line-height: 1.3;
+      color: var(--umber);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .philosophy-text em {
+      font-style: italic;
+      color: var(--terracotta);
+    }
+
+    /* ═══════════════════════════════════════════
+       FEATURED PRODUCTS
+       ═══════════════════════════════════════════ */
+    .products-section {
+      padding: 5rem 0;
+      background: var(--parchment);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 400;
+      color: var(--umber);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .products-grid { grid-template-columns: 1fr; }
+    }
+
+    .product-card {
+      background: var(--stone);
+      transition: transform 0.3s var(--ease-entrance), box-shadow 0.3s var(--ease-entrance);
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .product-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(44, 36, 32, 0.1);
+    }
+
+    .product-image {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-image-placeholder.oil {
+      background: linear-gradient(180deg, #C9B89D 0%, #A89478 100%);
+    }
+    .product-image-placeholder.creme {
+      background: linear-gradient(180deg, #D4C5B0 0%, #B8A794 100%);
+    }
+    .product-image-placeholder.masque {
+      background: linear-gradient(180deg, #BDC4B5 0%, #9AA68E 100%);
+    }
+
+    .product-image-text {
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--umber);
+      opacity: 0.4;
+    }
+
+    .product-info {
+      padding: 1.25rem 1.5rem 1.5rem;
+    }
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--umber);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-category {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--taupe);
+      margin-bottom: 0.75rem;
+    }
+
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 300;
+      letter-spacing: 0.02em;
+      color: var(--umber);
+    }
+
+    /* ═══════════════════════════════════════════
+       BRAND STORY
+       ═══════════════════════════════════════════ */
+    .brand-story {
+      padding: 5rem 0;
+      background: var(--stone);
+    }
+
+    .brand-story-inner {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .brand-image {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+
+    .brand-image-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, var(--taupe) 0%, #8A7E72 50%, var(--sage) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-story-content {
+      max-width: 500px;
+    }
+
+    .brand-story-overline {
+      margin-bottom: 1.5rem;
+    }
+
+    .brand-story-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--umber);
+      margin-bottom: 2rem;
+    }
+
+    .brand-story-text {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: var(--umber);
+      opacity: 0.85;
+      margin-bottom: 2.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .brand-story-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      .brand-image { aspect-ratio: 16/9; }
+      .brand-story-title { font-size: 2.25rem; }
+    }
+
+    /* ═══════════════════════════════════════════
+       JOURNAL PREVIEW
+       ═══════════════════════════════════════════ */
+    .journal-section {
+      padding: 5rem 0;
+      background: var(--parchment);
+    }
+
+    .journal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .journal-grid { grid-template-columns: 1fr; }
+    }
+
+    .journal-card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.3s var(--ease-entrance);
+    }
+
+    .journal-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .journal-card:hover .journal-card-title {
+      color: var(--terracotta);
+    }
+
+    .journal-image {
+      aspect-ratio: 3/2;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .journal-image-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .journal-image-placeholder.post1 {
+      background: linear-gradient(135deg, #C4A882 0%, #A89070 100%);
+    }
+    .journal-image-placeholder.post2 {
+      background: linear-gradient(135deg, #9AA68E 0%, #7E8C72 100%);
+    }
+
+    .journal-card-date {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--taupe);
+      margin-bottom: 0.5rem;
+    }
+
+    .journal-card-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--umber);
+      margin-bottom: 0.75rem;
+      transition: color 0.2s ease;
+    }
+
+    .journal-card-excerpt {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: var(--umber);
+      opacity: 0.7;
+      max-width: 460px;
+    }
+
+    /* ═══════════════════════════════════════════
+       INGREDIENTS BANNER
+       ═══════════════════════════════════════════ */
+    .ingredients-banner {
+      padding: 6rem 0;
+      background: var(--espresso);
+      text-align: center;
+    }
+
+    .ingredients-banner .label {
+      color: var(--amber);
+      margin-bottom: 1.5rem;
+    }
+
+    .ingredients-title {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      line-height: 1.15;
+      color: var(--parchment);
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .ingredients-subtitle {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--taupe);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .ingredients-banner .btn-primary {
+      background: var(--parchment);
+      color: var(--espresso);
+    }
+
+    .ingredients-banner .btn-primary:hover {
+      background: var(--stone);
+    }
+
+    /* ═══════════════════════════════════════════
+       NEWSLETTER
+       ═══════════════════════════════════════════ */
+    .newsletter-section {
+      padding: 5rem 0;
+      background: var(--stone);
+      text-align: center;
+    }
+
+    .newsletter-title {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      font-weight: 300;
+      color: var(--umber);
+      margin-bottom: 0.75rem;
+    }
+
+    .newsletter-subtitle {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--umber);
+      opacity: 0.7;
+      margin-bottom: 2rem;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 480px;
+      margin: 0 auto;
+      gap: 0;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--umber);
+      background: var(--parchment);
+      border: 1px solid rgba(44, 36, 32, 0.15);
+      border-right: none;
+      padding: 1rem 1.25rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .newsletter-form input::placeholder {
+      color: var(--taupe);
+    }
+
+    .newsletter-form input:focus {
+      border-color: var(--terracotta);
+    }
+
+    .newsletter-form button {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--parchment);
+      background: var(--terracotta);
+      border: 1px solid var(--terracotta);
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      transition: background 0.3s var(--ease-entrance);
+      white-space: nowrap;
+    }
+
+    .newsletter-form button:hover {
+      background: var(--clay);
+      border-color: var(--clay);
+    }
+
+    @media (max-width: 480px) {
+      .newsletter-form {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .newsletter-form input { border-right: 1px solid rgba(44, 36, 32, 0.15); }
+    }
+
+    /* ═══════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════ */
+    footer {
+      background: var(--espresso);
+      color: var(--parchment);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+
+    .footer-brand .wordmark {
+      color: var(--parchment);
+      font-size: 1.125rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .footer-tagline {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--taupe);
+      line-height: 1.5;
+    }
+
+    .footer-heading {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--taupe);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--parchment);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.2s ease, color 0.2s ease;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--amber);
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .footer-social a {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--parchment);
+      opacity: 0.6;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .footer-social a:hover { opacity: 1; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(245, 240, 232, 0.1);
+      padding-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copyright {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--taupe);
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-legal a {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--taupe);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .footer-legal a:hover { color: var(--parchment); }
+
+    @media (max-width: 768px) {
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       PRODUCT DETAIL PAGE PREVIEW
+       ═══════════════════════════════════════════ */
+    .pdp-preview {
+      padding: 5rem 0;
+      background: var(--linen);
+    }
+
+    .pdp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    @media (max-width: 768px) {
+      .pdp-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    .pdp-image {
+      aspect-ratio: 4/5;
+      background: linear-gradient(180deg, #C9B89D 0%, #A89478 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 96px;
+    }
+
+    .pdp-content { padding: 1rem 0; }
+
+    .pdp-breadcrumb {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--taupe);
+      margin-bottom: 2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .pdp-breadcrumb a {
+      color: var(--taupe);
+      text-decoration: none;
+    }
+
+    .pdp-breadcrumb a:hover { color: var(--terracotta); }
+
+    .pdp-breadcrumb span { margin: 0 0.5rem; }
+
+    .pdp-title {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--umber);
+      margin-bottom: 0.5rem;
+    }
+
+    .pdp-subtitle {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--taupe);
+      margin-bottom: 1.5rem;
+    }
+
+    .pdp-price {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--umber);
+      letter-spacing: 0.02em;
+      margin-bottom: 2rem;
+    }
+
+    .pdp-divider {
+      border: none;
+      border-top: 1px solid rgba(44, 36, 32, 0.1);
+      margin: 2rem 0;
+    }
+
+    .pdp-description {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--umber);
+      opacity: 0.85;
+      margin-bottom: 2rem;
+    }
+
+    /* Subscription toggle */
+    .purchase-options {
+      margin-bottom: 2rem;
+    }
+
+    .purchase-option {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      border: 1px solid rgba(44, 36, 32, 0.12);
+      margin-bottom: -1px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .purchase-option:first-child { border-bottom: none; }
+
+    .purchase-option.selected {
+      border-color: var(--terracotta);
+      background: rgba(196, 112, 75, 0.04);
+      z-index: 1;
+      position: relative;
+    }
+
+    .purchase-option-radio {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--taupe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: border-color 0.2s ease;
+    }
+
+    .purchase-option.selected .purchase-option-radio {
+      border-color: var(--terracotta);
+    }
+
+    .purchase-option.selected .purchase-option-radio::after {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--terracotta);
+    }
+
+    .purchase-option-label {
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--umber);
+    }
+
+    .purchase-option-detail {
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      color: var(--taupe);
+      margin-left: auto;
+    }
+
+    .subscription-badge {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--sage);
+      background: rgba(139, 154, 126, 0.12);
+      padding: 0.25rem 0.5rem;
+      margin-left: 0.5rem;
+    }
+
+    /* Accordion for ingredients */
+    .pdp-accordion {
+      border-top: 1px solid rgba(44, 36, 32, 0.1);
+    }
+
+    .pdp-accordion-item {
+      border-bottom: 1px solid rgba(44, 36, 32, 0.1);
+    }
+
+    .pdp-accordion-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 1.25rem 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--umber);
+    }
+
+    .pdp-accordion-trigger::after {
+      content: '+';
+      font-size: 1.25rem;
+      font-weight: 300;
+      color: var(--taupe);
+      transition: transform 0.3s ease;
+    }
+
+    .pdp-accordion-content {
+      padding: 0 0 1.25rem;
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.8;
+      color: var(--umber);
+      opacity: 0.8;
+    }
+
+    /* ═══════════════════════════════════════════
+       PAGE DIVIDER
+       ═══════════════════════════════════════════ */
+    .page-divider {
+      text-align: center;
+      padding: 3rem 0;
+      background: var(--parchment);
+    }
+
+    .page-divider-label {
+      font-family: var(--font-body);
+      font-size: 0.625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--taupe);
+      position: relative;
+      display: inline-block;
+    }
+
+    .page-divider-label::before,
+    .page-divider-label::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 60px;
+      height: 1px;
+      background: rgba(44, 36, 32, 0.12);
+    }
+
+    .page-divider-label::before { right: calc(100% + 1rem); }
+    .page-divider-label::after { left: calc(100% + 1rem); }
+  </style>
+</head>
+<body>
+
+  <!-- ════════ HEADER ════════ -->
+  <header id="header">
+    <div class="container header-inner">
+      <a href="/" class="wordmark">Hand of Yah</a>
+      <nav>
+        <ul class="nav-main">
+          <li><a href="/shop">Shop</a></li>
+          <li><a href="/learn">Learn</a></li>
+          <li><a href="/journal">Journal</a></li>
+          <li><a href="/about">About</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="/account">Account</a>
+        <a href="/cart" class="cart-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 01-8 0"></path>
+          </svg>
+        </a>
+        <button class="nav-mobile-toggle" aria-label="Menu">
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════ HERO ════════ -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-content">
+        <div class="hero-overline reveal">New Arrival</div>
+        <h1 class="hero-title reveal">Ginger Root<br>Creme</h1>
+        <p class="hero-subtitle reveal">A deeply nourishing formula that restores and protects, crafted with hand-selected botanicals and the warmth of fresh ginger root.</p>
+        <a href="/shop/ginger-root-creme" class="btn-primary reveal">Shop now</a>
+      </div>
+      <div class="hero-image">
+        <div class="hero-image-placeholder">
+          <div class="hero-image-label">
+            Product photography<br>
+            <span>Amber bottle on volcanic stone with fresh ginger</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PHILOSOPHY ════════ -->
+  <section class="philosophy">
+    <div class="container">
+      <p class="philosophy-text reveal">
+        Skincare is <em>self-care</em>. Every product is an invitation to pause, to nourish, to honor the skin you live in.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════ FEATURED PRODUCTS ════════ -->
+  <section class="products-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">The essentials</h2>
+        <a href="/shop" class="btn-text">View all</a>
+      </div>
+      <div class="products-grid reveal-stagger">
+        <a href="/shop/rosehip-facial-oil" class="product-card reveal">
+          <div class="product-image">
+            <div class="product-image-placeholder oil">
+              <span class="product-image-text">Product image</span>
+            </div>
+          </div>
+          <div class="product-info">
+            <div class="product-category">Face</div>
+            <div class="product-name">Rosehip Facial Oil</div>
+            <div class="product-price">$48</div>
+          </div>
+        </a>
+        <a href="/shop/ginger-root-creme" class="product-card reveal">
+          <div class="product-image">
+            <div class="product-image-placeholder creme">
+              <span class="product-image-text">Product image</span>
+            </div>
+          </div>
+          <div class="product-info">
+            <div class="product-category">Face</div>
+            <div class="product-name">Ginger Root Creme</div>
+            <div class="product-price">$56</div>
+          </div>
+        </a>
+        <a href="/shop/green-clay-masque" class="product-card reveal">
+          <div class="product-image">
+            <div class="product-image-placeholder masque">
+              <span class="product-image-text">Product image</span>
+            </div>
+          </div>
+          <div class="product-info">
+            <div class="product-category">Face Masque</div>
+            <div class="product-name">Green Clay Masque</div>
+            <div class="product-price">$42</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ BRAND STORY ════════ -->
+  <section class="brand-story">
+    <div class="container brand-story-inner">
+      <div class="brand-image reveal">
+        <div class="brand-image-placeholder">
+          <div class="hero-image-label">
+            Lifestyle photography<br>
+            <span>Hands performing skincare ritual, warm natural light</span>
+          </div>
+        </div>
+      </div>
+      <div class="brand-story-content">
+        <div class="label brand-story-overline reveal">Our story</div>
+        <h2 class="brand-story-title reveal">Crafted with intention, rooted in nature</h2>
+        <p class="brand-story-text reveal">Hand of Yah began with a simple belief: what you put on your skin matters as much as what you put in your body. Every formula is researched, tested, and crafted with ingredients we trust — botanicals sourced for their potency, never their trendiness.</p>
+        <a href="/about" class="btn-secondary reveal">Read our story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ INGREDIENTS BANNER ════════ -->
+  <section class="ingredients-banner">
+    <div class="container">
+      <div class="label reveal">Transparency</div>
+      <h2 class="ingredients-title reveal">Every ingredient, explained</h2>
+      <p class="ingredients-subtitle reveal">We believe you should know exactly what touches your skin and why. Explore our complete ingredient database.</p>
+      <a href="/ingredients" class="btn-primary reveal">Explore ingredients</a>
+    </div>
+  </section>
+
+  <!-- ════════ JOURNAL ════════ -->
+  <section class="journal-section">
+    <div class="container">
+      <div class="section-header reveal">
+        <h2 class="section-title">From the journal</h2>
+        <a href="/journal" class="btn-text">Read all</a>
+      </div>
+      <div class="journal-grid reveal-stagger">
+        <a href="/journal/evening-skincare-ritual" class="journal-card reveal">
+          <div class="journal-image">
+            <div class="journal-image-placeholder post1">
+              <span class="product-image-text">Journal image</span>
+            </div>
+          </div>
+          <div class="journal-card-date">March 2026</div>
+          <h3 class="journal-card-title">The evening ritual: why your nighttime routine matters most</h3>
+          <p class="journal-card-excerpt">Your skin does its deepest repair work while you sleep. Here is how to support that process with intention and the right ingredients.</p>
+        </a>
+        <a href="/journal/understanding-facial-oils" class="journal-card reveal">
+          <div class="journal-image">
+            <div class="journal-image-placeholder post2">
+              <span class="product-image-text">Journal image</span>
+            </div>
+          </div>
+          <div class="journal-card-date">February 2026</div>
+          <h3 class="journal-card-title">Understanding facial oils: a guide to choosing the right one</h3>
+          <p class="journal-card-excerpt">Not all oils are created equal. We break down the difference between carrier oils and essential oils, and which formulations work for your skin type.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ PAGE DIVIDER ════════ -->
+  <div class="page-divider">
+    <span class="page-divider-label">Product detail page preview</span>
+  </div>
+
+  <!-- ════════ PDP PREVIEW ════════ -->
+  <section class="pdp-preview">
+    <div class="container">
+      <div class="pdp-grid">
+        <div class="pdp-image reveal">
+          <div class="hero-image-label">
+            Product photography<br>
+            <span>Rosehip oil bottle, close-up, textured stone surface</span>
+          </div>
+        </div>
+        <div class="pdp-content">
+          <div class="pdp-breadcrumb reveal">
+            <a href="/shop">Shop</a><span>/</span><a href="/shop/face">Face</a><span>/</span>Rosehip Facial Oil
+          </div>
+          <h1 class="pdp-title reveal">Rosehip Facial Oil</h1>
+          <p class="pdp-subtitle reveal">Restorative facial oil for all skin types</p>
+          <div class="pdp-price reveal">$48</div>
+
+          <div class="purchase-options reveal">
+            <div class="purchase-option selected" onclick="selectOption(this)">
+              <div class="purchase-option-radio"></div>
+              <span class="purchase-option-label">One-time purchase</span>
+              <span class="purchase-option-detail">$48.00</span>
+            </div>
+            <div class="purchase-option" onclick="selectOption(this)">
+              <div class="purchase-option-radio"></div>
+              <span class="purchase-option-label">Subscribe <span class="subscription-badge">Save 10%</span></span>
+              <span class="purchase-option-detail">$43.20 / month</span>
+            </div>
+          </div>
+
+          <a href="/cart" class="btn-primary reveal" style="width: 100%; text-align: center; margin-bottom: 2rem;">Add to cart</a>
+
+          <p class="pdp-description reveal">Cold-pressed rosehip seed oil blended with Jojoba Oil and Vitamin E to deeply nourish, restore elasticity, and protect against environmental stress. Lightweight enough for daily use, potent enough to transform your skin over time.</p>
+
+          <div class="pdp-accordion reveal">
+            <div class="pdp-accordion-item">
+              <button class="pdp-accordion-trigger">Ingredients</button>
+              <div class="pdp-accordion-content">
+                Rosa Canina (Rosehip) Seed Oil, Simmondsia Chinensis (Jojoba) Seed Oil, Tocopherol (Vitamin E), Lavandula Angustifolia (Lavender) Oil, Pelargonium Graveolens (Geranium) Oil
+              </div>
+            </div>
+            <div class="pdp-accordion-item">
+              <button class="pdp-accordion-trigger">How to use</button>
+              <div class="pdp-accordion-content">
+                After cleansing and toning, warm 3-4 drops between your palms. Press gently into face and neck using upward motions. Use morning and evening. Allow a moment to absorb before applying moisturizer.
+              </div>
+            </div>
+            <div class="pdp-accordion-item">
+              <button class="pdp-accordion-trigger">Shipping and returns</button>
+              <div class="pdp-accordion-content">
+                Free shipping on orders over $75. Standard delivery 3-5 business days. 30-day return policy for unopened products.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ NEWSLETTER ════════ -->
+  <section class="newsletter-section">
+    <div class="container">
+      <h2 class="newsletter-title reveal">Stay connected</h2>
+      <p class="newsletter-subtitle reveal">Skincare rituals, new arrivals, and journal entries. No noise.</p>
+      <form class="newsletter-form reveal" onsubmit="return false;">
+        <input type="email" placeholder="Your email address" aria-label="Email address">
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="wordmark">Hand of Yah</span>
+          <p class="footer-tagline">Skincare is self-care.<br>Crafted with intention, rooted in nature.</p>
+        </div>
+        <div>
+          <div class="footer-heading">Shop</div>
+          <ul class="footer-links">
+            <li><a href="/shop/face">Face</a></li>
+            <li><a href="/shop/hair-oils">Hair Oils</a></li>
+            <li><a href="/shop/eye-cremes">Eye Cremes</a></li>
+            <li><a href="/shop/face-masques">Face Masques</a></li>
+            <li><a href="/shop/supplements">Supplements</a></li>
+            <li><a href="/shop/fragrances">Fragrances</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-heading">Company</div>
+          <ul class="footer-links">
+            <li><a href="/about">Our story</a></li>
+            <li><a href="/ingredients">Ingredients</a></li>
+            <li><a href="/journal">Journal</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-heading">Connect</div>
+          <div class="footer-social">
+            <a href="#">IG</a>
+            <a href="#">FB</a>
+            <a href="#">YT</a>
+            <a href="#">X</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-copyright">&copy; 2026 Hand of Yah. All rights reserved.</div>
+        <div class="footer-legal">
+          <a href="/terms">Terms</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/shipping-returns">Shipping</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Header scroll shadow ──
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // ── Scroll reveal animations ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── Purchase option toggle ──
+    function selectOption(el) {
+      document.querySelectorAll('.purchase-option').forEach(opt => opt.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+  </script>
+
+</body>
+</html>
