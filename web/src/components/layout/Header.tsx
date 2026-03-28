@@ -19,7 +19,7 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 bg-parchment transition-shadow duration-300 ${scrolled ? 'shadow-header' : ''}`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-parchment/80 backdrop-blur-xl shadow-header' : 'bg-parchment/95 backdrop-blur-sm'}`}
       >
         <div className="container-content flex items-center justify-between h-[72px]">
           {/* Wordmark */}
