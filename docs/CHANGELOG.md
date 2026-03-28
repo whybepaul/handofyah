@@ -67,3 +67,22 @@
 - C6: Orders linked to customer accounts via email lookup
 - C7: Footer category links fixed
 - W1-W8: Auth helper extraction, cart hydration guard, webhook retry on failure, field projection, lazy Sanity init, mixed cart validation, Supabase client caching
+
+## [2026-03-28] Phase 8: Documentation
+- Project README with full setup instructions, tech stack, routes, API reference
+- Session notes for 2026-03-27 and 2026-03-28
+- Manifest updated to status: complete
+
+## [2026-03-28] Post-Phase: Polish and Deliverables
+- Scroll fade-up animations added (ScrollReveal component with IntersectionObserver, staggered delays, prefers-reduced-motion support)
+- Homepage sections extracted to client HomeSections.tsx for animation support
+- Animations applied to PDP, journal posts, and about page
+- Glassmorphism header (semi-transparent parchment with backdrop-blur, intensifies on scroll)
+- Unsplash placeholder images integrated (hero, product cards, brand story, journal)
+- Design critique document rewritten with 20-issue flat structure and honest assessment
+- Mobile optimization section expanded with 10 specific responsive design details
+- Issue resolution matrix: 13 resolved, 4 addressed, 2 mitigated, 1 gap closed
+- CTO technical brief: architecture, security, commerce, QA findings, risk assessment, pre-launch requirements
+- Product roadmap updated with pre-launch service setup (Sanity, Supabase, Stripe, Listmonk on Render free tier)
+- Listmonk deployment instructions with keep-alive cron job for free tier
+- Standalone repo created at github.com/whybepaul/handofyah
